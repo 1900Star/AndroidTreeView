@@ -18,15 +18,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        List<NodeBean> mNodeList = getNodeList();
+        TreeViewAdatper treeViewAdatper = new TreeViewAdatper(this, mNodeList);
+        mRecyclerView.setAdapter(treeViewAdatper);
+        treeViewAdatper.setListener(new TreeViewAdatper.OnItemClickListener() {
+            @Override
+            public void itemClick(NodeBean bean) {
+
+            }
+        });
+    }
+
+    private List<NodeBean> getNodeList() {
+        List<NodeBean> nodeBeanList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            nodeBeanList.add(new NodeBean(i, i % 2 == 0));
+        }
+        return nodeBeanList;
     }
 
     private void initView() {
         mRecyclerView = findViewById(R.id.recycler_view);
-        List<NodeBean> mNodeList = new ArrayList<>();
-        TreeViewAdatper treeViewAdatper = new TreeViewAdatper(this, mNodeList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(divider);
-        mRecyclerView.setAdapter(treeViewAdatper);
     }
 }

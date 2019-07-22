@@ -1,11 +1,14 @@
 package com.example.androidtreeview;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -35,7 +38,16 @@ public class TreeViewAdatper extends RecyclerView.Adapter<TreeViewAdatper.TreeVi
 
     @Override
     public void onBindViewHolder(@NonNull TreeViewHolder treeViewHolder, int i) {
-
+        final NodeBean nodeBean = mNodeBeanList.get(i);
+        treeViewHolder.mIv.setImageResource(nodeBean.isOpen() ? R.drawable.tree_open : R.drawable.tree_close);
+        treeViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.itemClick(nodeBean);
+                }
+            }
+        });
     }
 
     @Override
@@ -45,8 +57,26 @@ public class TreeViewAdatper extends RecyclerView.Adapter<TreeViewAdatper.TreeVi
 
     class TreeViewHolder extends RecyclerView.ViewHolder {
 
+        private final ImageView mIv;
+        private final TextView mTextView;
+
         public TreeViewHolder(@NonNull View itemView) {
             super(itemView);
+            mIv = itemView.findViewById(R.id.iv_close);
+            mTextView = itemView.findViewById(R.id.tv);
         }
     }
+
+    private OnItemClickListener mListener;
+
+    public void setListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void itemClick(NodeBean bean);
+
+
+    }
+
 }

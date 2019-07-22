@@ -14,4 +14,20 @@ public class NodeBean {
         this.rank = rank;
         this.isOpen = isOpen;
     }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
 }
